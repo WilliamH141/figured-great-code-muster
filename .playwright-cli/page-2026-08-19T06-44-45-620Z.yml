@@ -1,0 +1,182 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img "Figured" [ref=e6]
+      - generic [ref=e7]:
+        - heading "Southdown Rural Accountants" [level=1] [ref=e8]
+        - paragraph [ref=e9]: The Figured Great Code Muster — practice management, the manual way
+  - navigation [ref=e10]:
+    - generic [ref=e11]:
+      - button "Briefing" [ref=e12]
+      - button "Bank coding" [ref=e13]
+      - button "Inbox" [ref=e14]
+      - button "Monthly report" [ref=e15]
+      - button "Invoice entry" [ref=e16]
+      - button "Stock reconciliation" [ref=e17]
+      - button "AI example" [ref=e18]
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - heading "The scenario" [level=2] [ref=e22]
+        - paragraph [ref=e23]:
+          - text: Welcome to
+          - strong [ref=e24]: The Figured Great Code Muster
+          - text: — and to
+          - strong [ref=e25]: Southdown Rural Accountants
+          - text: ", a small (fictional) farm accounting practice. You're the new graduate adviser, and this is the practice's management tool. It works. It is also"
+          - emphasis [ref=e26]: entirely manual
+          - text: ", and the grunt work is eating the team alive. Today: feel the pain, then fix some of it with AI."
+        - table [ref=e27]:
+          - rowgroup [ref=e28]:
+            - row "Farm Type Farmer" [ref=e29]:
+              - columnheader "Farm" [ref=e30]
+              - columnheader "Type" [ref=e31]
+              - columnheader "Farmer" [ref=e32]
+          - rowgroup [ref=e33]:
+            - row "Riverbend Dairy Ltd Dairy Gary Preston" [ref=e34]:
+              - cell "Riverbend Dairy Ltd" [ref=e35]
+              - cell "Dairy" [ref=e36]
+              - cell "Gary Preston" [ref=e37]
+            - row "Kahikatea Downs Sheep & Beef Kate Molloy" [ref=e38]:
+              - cell "Kahikatea Downs" [ref=e39]
+              - cell "Sheep & Beef" [ref=e40]
+              - cell "Kate Molloy" [ref=e41]
+            - row "Windrow Cropping Ltd Arable (crops) Bruce Tanner" [ref=e42]:
+              - cell "Windrow Cropping Ltd" [ref=e43]
+              - cell "Arable (crops)" [ref=e44]
+              - cell "Bruce Tanner" [ref=e45]
+        - paragraph [ref=e46]: Everything in this app is fictional — the farms, the people, the emails, the numbers.
+      - generic [ref=e47]:
+        - heading "The brief" [level=2] [ref=e48]
+        - list [ref=e49]:
+          - listitem [ref=e50]:
+            - strong [ref=e51]: Research (the first ~50 minutes).
+            - text: "Do the grunt work by hand — that's how you find out where it hurts. You'll quickly hit things you don't understand: farming terms, tax concepts, how milk payments work."
+            - strong [ref=e52]: You're not expected to know any of it.
+            - text: "Learning it — with AI, with the app's data, with whatever works — is part of the exercise. Keep track of how you learnt: you'll be asked to walk through it. One tip: the pages aren't islands. It's the same three farms everywhere, and the story runs through the whole app — what you need for one page often lives on another."
+          - listitem [ref=e53]:
+            - strong [ref=e54]: Pick the worst grunt work.
+            - text: One screen, or one slice of one screen. If you've spotted something a client clearly needs that
+            - emphasis [ref=e55]: "no"
+            - text: screen does, building that counts too.
+          - listitem [ref=e56]:
+            - strong [ref=e57]: Automate it
+            - text: using the
+            - code [ref=e58]: POST /api/ai
+            - text: endpoint. The AI Example tab is the pattern to copy — it's the only AI code in the app so far.
+          - listitem [ref=e59]:
+            - strong [ref=e60]: Demo it.
+            - text: "3–4 minutes per team: the manual pain, what you had to learn (and how you learnt it), and your fix. Expect questions about your design decisions."
+      - generic [ref=e61]:
+        - heading "Scope" [level=2] [ref=e62]
+        - paragraph [ref=e63]:
+          - strong [ref=e64]: "Your deliverable:"
+          - text: one working AI-assisted improvement to one screen, demoed on the seeded data. Be ready to explain and defend every design decision you made.
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - heading "In scope" [level=3] [ref=e67]
+            - list [ref=e68]:
+              - listitem [ref=e69]:
+                - text: Anything in
+                - code [ref=e70]: resources/js/pages/
+                - text: and
+                - code [ref=e71]: app/Http/Controllers/
+              - listitem [ref=e72]:
+                - text: New routes in
+                - code [ref=e73]: routes/api.php
+                - text: if you need them
+              - listitem [ref=e74]:
+                - text: All AI calls through
+                - code [ref=e75]: POST /api/ai
+              - listitem [ref=e76]: Slicing small — one field on one screen, working end-to-end, is a complete feature
+              - listitem [ref=e77]: Building a capability the app doesn't have yet — new tab, new endpoint, go for it
+          - generic [ref=e78]:
+            - heading "Out of scope" [level=3] [ref=e79]
+            - list [ref=e80]:
+              - listitem [ref=e81]:
+                - text: Calling Anthropic from the browser / moving the key out of
+                - code [ref=e82]: .env
+              - listitem [ref=e83]:
+                - text: Using the provided key outside this app — it powers
+                - code [ref=e84]: /api/ai
+                - text: ", not Claude Code or any other tool. Use your own accounts for those"
+              - listitem [ref=e85]: New composer or yarn packages
+              - listitem [ref=e86]: Auth, deployment, tests, restructuring the app
+              - listitem [ref=e87]:
+                - text: Editing the seeded data to make your problem easier — the mess
+                - emphasis [ref=e88]: is
+                - text: the exercise
+      - generic [ref=e89]:
+        - heading "What we're looking for" [level=2] [ref=e90]
+        - paragraph [ref=e91]: "Roughly in order:"
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - term [ref=e94]: Problem choice
+            - definition [ref=e95]: Real pain, a one-sentence "why", scoped to finishable.
+          - generic [ref=e96]:
+            - term [ref=e97]: What you learnt
+            - definition [ref=e98]: Explain something you didn't know at 4pm, and how you checked it. We'll ask follow-ups.
+          - generic [ref=e99]:
+            - term [ref=e100]: It works
+            - definition [ref=e101]: End-to-end on the seeded data. Narrow-and-working beats broad-and-broken.
+          - generic [ref=e102]:
+            - term [ref=e103]: The demo
+            - definition [ref=e104]: Pain → learning → fix, honest about limitations.
+      - generic [ref=e105]:
+        - heading "Two-minute jargon cheat sheet" [level=2] [ref=e106]
+        - generic [ref=e107]:
+          - generic [ref=e108]:
+            - term [ref=e109]: Farmer / adviser
+            - definition [ref=e110]: The farmer runs the farm and is the client; the adviser (you) does their numbers and answers their questions.
+          - generic [ref=e111]:
+            - term [ref=e112]: Coding
+            - definition [ref=e113]: Assigning each bank transaction to an account like "Feed" or "Fuel" so reports mean something. Nothing to do with programming.
+          - generic [ref=e114]:
+            - term [ref=e115]: Budget vs actual
+            - definition [ref=e116]: What the farm planned to earn/spend each month vs what actually happened. The difference is the variance.
+          - generic [ref=e117]:
+            - term [ref=e118]: Sale docket
+            - definition [ref=e119]: The paper slip a stock agent issues when livestock are sold. Often the only record that a sale happened.
+          - generic [ref=e120]:
+            - term [ref=e121]: Stock reconciliation
+            - definition [ref=e122]: Proving opening animals + births + purchases − deaths − sales = closing animals. When it doesn't balance, something was missed (or counted twice).
+      - generic [ref=e123]:
+        - heading "Time management guideline" [level=2] [ref=e124]
+        - table [ref=e125]:
+          - rowgroup [ref=e126]:
+            - row "4:00 – 4:10 Kickoff. Scenario, teams, API keys handed out." [ref=e127]:
+              - cell "4:00 – 4:10" [ref=e128]
+              - cell "Kickoff. Scenario, teams, API keys handed out." [ref=e129]
+            - row "4:10 – 5:00 Research. Do the manual grunt work on every page, and dig into what you don't understand — the terms, the tax concepts, how the money actually moves. Use AI to learn; keep track of what you asked and how you checked the answers." [ref=e130]:
+              - cell "4:10 – 5:00" [ref=e131]
+              - cell "Research. Do the manual grunt work on every page, and dig into what you don't understand — the terms, the tax concepts, how the money actually moves. Use AI to learn; keep track of what you asked and how you checked the answers." [ref=e132]
+            - 'row "5:00 Checkpoint — pick your problem. Two sentences: \"We''re automating X because Y\" and \"the thing we had to learn to do it properly is Z.\"" [ref=e133]':
+              - cell "5:00" [ref=e134]
+              - 'cell "Checkpoint — pick your problem. Two sentences: \"We''re automating X because Y\" and \"the thing we had to learn to do it properly is Z.\"" [ref=e135]'
+            - 'row "5:00 – 5:30 Build the thin end: get one AI call working on real page data (copy the AI Example pattern)." [ref=e136]':
+              - cell "5:00 – 5:30" [ref=e137]
+              - 'cell "Build the thin end: get one AI call working on real page data (copy the AI Example pattern)." [ref=e138]'
+            - row "5:30 Mid-point check. Nothing working on screen yet? Shrink scope now." [ref=e139]:
+              - cell "5:30" [ref=e140]
+              - cell "Mid-point check. Nothing working on screen yet? Shrink scope now." [ref=e141]
+            - 'row "5:30 – 6:20 Build the rest: wire it into the page and handle the awkward cases you found in the data." [ref=e142]':
+              - cell "5:30 – 6:20" [ref=e143]
+              - 'cell "Build the rest: wire it into the page and handle the awkward cases you found in the data." [ref=e144]'
+            - row "6:00 Food arrives. Grab a plate and keep building — demos still start at 6:30." [ref=e145]:
+              - cell "6:00" [ref=e146]
+              - cell "Food arrives. Grab a plate and keep building — demos still start at 6:30." [ref=e147]
+            - row "6:20 Scope freeze. Stop adding. Fix, polish, rehearse the demo once end-to-end." [ref=e148]:
+              - cell "6:20" [ref=e149]
+              - cell "Scope freeze. Stop adding. Fix, polish, rehearse the demo once end-to-end." [ref=e150]
+            - row "6:30 Pencils down." [ref=e151]:
+              - cell "6:30" [ref=e152]
+              - cell "Pencils down." [ref=e153]
+            - 'row "6:30 – 7:00 Demos and debrief — 4–5 minutes per team: the manual pain → what you had to learn (and how) → your fix." [ref=e154]':
+              - cell "6:30 – 7:00" [ref=e155]
+              - 'cell "Demos and debrief — 4–5 minutes per team: the manual pain → what you had to learn (and how) → your fix." [ref=e156]'
+            - row "7:00 – 7:45 Open — catch-ups, and overflow if demos run long." [ref=e157]:
+              - cell "7:00 – 7:45" [ref=e158]
+              - cell "Open — catch-ups, and overflow if demos run long." [ref=e159]
+            - row "7:45 – 8:00 Wrap. Thanks, pack down." [ref=e160]:
+              - cell "7:45 – 8:00" [ref=e161]
+              - cell "Wrap. Thanks, pack down." [ref=e162]
