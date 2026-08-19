@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const emails = ref([]);
 const selected = ref(null);
@@ -31,6 +31,20 @@ async function sendReply() {
     sending.value = false;
 }
 
+function isUrgent(email) {
+    return `${email.subject ?? ''} ${email.body ?? ''}`.toLowerCase().includes('urgent');
+}
+
+function sortRank(email) {
+    if (email.replied_at) return 2;
+    if (isUrgent(email)) return 0;
+    return 1;
+}
+
+const sortedEmails = computed(() =>
+    [...emails.value].sort((a, b) => sortRank(a) - sortRank(b)),
+);
+
 function formatDateTime(iso) {
     return new Date(iso).toLocaleString('en-NZ', {
         day: 'numeric',
@@ -57,7 +71,7 @@ function formatDateTime(iso) {
             <!-- Email list -->
             <div class="overflow-hidden rounded border border-fg-muted-grey bg-white">
                 <button
-                    v-for="email in emails"
+                    v-for="email in sortedEmails"
                     :key="email.id"
                     class="block w-full border-b border-fg-pale-grey px-3 py-2 text-left hover:bg-fg-pale-grey"
                     :class="selected?.id === email.id ? 'bg-fg-main-blue-9' : ''"
@@ -65,11 +79,19 @@ function formatDateTime(iso) {
                 >
                     <div class="flex items-center justify-between">
                         <span class="text-sm font-medium">{{ email.from_name }}</span>
-                        <span
-                            v-if="email.replied_at"
-                            class="rounded-full bg-fg-positive-15 px-2 py-0.5 text-xs text-fg-positive-dark"
-                        >
-                            replied
+                        <span class="flex gap-1">
+                            <span
+                                v-if="isUrgent(email)"
+                                class="rounded-full bg-fg-danger-15 px-2 py-0.5 text-xs text-fg-danger-dark"
+                            >
+                                urgent
+                            </span>
+                            <span
+                                v-if="email.replied_at"
+                                class="rounded-full bg-fg-positive-15 px-2 py-0.5 text-xs text-fg-positive-dark"
+                            >
+                                replied
+                            </span>
                         </span>
                     </div>
                     <p class="truncate text-sm text-fg-dark-grey">{{ email.subject }}</p>
