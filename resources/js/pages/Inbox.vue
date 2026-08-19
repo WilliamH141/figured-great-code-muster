@@ -61,11 +61,16 @@ function isUrgent(email) {
     return `${email.subject ?? ''} ${email.body ?? ''}`.toLowerCase().includes('urgent');
 }
 
+function hasNoSubject(email) {
+    return (email.subject ?? '').trim().toLowerCase() === '(no subject)';
+}
+
 function badge(email) {
-    if (isUrgent(email)) {
-        return email.replied_at
-            ? { label: 'urgent reply', class: 'bg-orange-100 text-orange-700' }
-            : { label: 'urgent task', class: 'bg-fg-danger-15 text-fg-danger-dark' };
+    if (isUrgent(email) && !email.replied_at) {
+        return { label: 'urgent task', class: 'bg-fg-danger-15 text-fg-danger-dark' };
+    }
+    if (isUrgent(email) || hasNoSubject(email)) {
+        return { label: 'urgent reply', class: 'bg-orange-100 text-orange-700' };
     }
     if (email.replied_at) {
         return { label: 'replied', class: 'bg-fg-positive-15 text-fg-positive-dark' };
@@ -73,11 +78,16 @@ function badge(email) {
     return null;
 }
 
-const badgeRank = { 'urgent task': 0, 'urgent reply': 1, replied: 2 };
+function isUrgentBadge(email) {
+    const label = badge(email)?.label;
+    return label === 'urgent task' || label === 'urgent reply';
+}
+
+const badgeRank = { 'urgent reply': 0, 'urgent task': 1, replied: 3 };
 
 function sortRank(email) {
     const label = badge(email)?.label;
-    return label ? badgeRank[label] : 0.5;
+    return label ? badgeRank[label] : 2;
 }
 
 const sortedEmails = computed(() =>
@@ -88,8 +98,8 @@ const overviewVisible = ref(true);
 const urgentExpanded = ref(false);
 const tasksExpanded = ref(false);
 
-const urgentEmails = computed(() => sortedEmails.value.filter((email) => isUrgent(email)));
-const taskEmails = computed(() => sortedEmails.value.filter((email) => !isUrgent(email) && !email.replied_at));
+const urgentEmails = computed(() => sortedEmails.value.filter((email) => isUrgentBadge(email)));
+const taskEmails = computed(() => sortedEmails.value.filter((email) => !isUrgentBadge(email) && !email.replied_at));
 
 function formatDateTime(iso) {
     return new Date(iso).toLocaleString('en-NZ', {
