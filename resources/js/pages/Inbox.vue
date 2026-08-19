@@ -15,6 +15,13 @@ const drafting = ref(false);
 const agentResult = ref(null);
 const agentError = ref('');
 
+// Acting on the action item found in a flagged email (right now: booking a
+// disputed invoice). acting() is the request in flight; actResult() is the
+// confirmation once it's actually been done.
+const acting = ref(false);
+const actResult = ref(null);
+const actError = ref('');
+
 onMounted(async () => {
     const { data } = await axios.get('/api/emails');
     emails.value = data;
@@ -26,12 +33,16 @@ function open(email) {
     draft.value = '';
     agentResult.value = null;
     agentError.value = '';
+    actResult.value = null;
+    actError.value = '';
 }
 
 async function draftWithAi() {
     drafting.value = true;
     agentResult.value = null;
     agentError.value = '';
+    actResult.value = null;
+    actError.value = '';
     try {
         const { data } = await axios.post(`/api/emails/${selected.value.id}/draft`);
         agentResult.value = data;
@@ -42,6 +53,19 @@ async function draftWithAi() {
         agentError.value = e.response?.data?.error ?? 'Something went wrong asking the assistant.';
     } finally {
         drafting.value = false;
+    }
+}
+
+async function doActionItem() {
+    acting.value = true;
+    actError.value = '';
+    try {
+        const { data } = await axios.post(`/api/emails/${selected.value.id}/act`);
+        actResult.value = data;
+    } catch (e) {
+        actError.value = e.response?.data?.error ?? 'Something went wrong doing that.';
+    } finally {
+        acting.value = false;
     }
 }
 
@@ -146,6 +170,25 @@ function formatDateTime(iso) {
                         <div v-else-if="agentResult?.action === 'flag'" class="mt-2 rounded bg-fg-warning-15 p-3 text-sm text-fg-warning-text">
                             <p class="font-medium">Needs a human — not drafted</p>
                             <p class="mt-1">{{ agentResult.reason }}</p>
+
+                            <div v-if="agentResult.action_item" class="mt-3 rounded border border-fg-warning-text/40 bg-white p-3">
+                                <p class="font-medium text-fg-dark-grey">Action item found: {{ agentResult.action_item.label }}</p>
+
+                                <p v-if="actError" class="mt-2 text-fg-danger-dark">{{ actError }}</p>
+
+                                <div v-else-if="actResult" class="mt-2 text-fg-positive-dark">
+                                    ✓ {{ actResult.summary }}
+                                </div>
+
+                                <button
+                                    v-else
+                                    class="mt-2 rounded bg-fg-main-blue px-3 py-1.5 text-xs font-medium text-white hover:bg-fg-main-blue-hover disabled:opacity-50"
+                                    :disabled="acting"
+                                    @click="doActionItem"
+                                >
+                                    {{ acting ? 'Doing it…' : 'Yes, do this' }}
+                                </button>
+                            </div>
                         </div>
 
                         <div v-else-if="agentResult?.action === 'draft'" class="mt-2 rounded bg-fg-positive-15 p-3 text-sm text-fg-positive-dark">
