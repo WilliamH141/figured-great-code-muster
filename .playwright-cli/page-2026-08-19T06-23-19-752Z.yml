@@ -1,0 +1,145 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img "Figured" [ref=e6]
+      - generic [ref=e7]:
+        - heading "Southdown Rural Accountants" [level=1] [ref=e8]
+        - paragraph [ref=e9]: The Figured Great Code Muster — practice management, the manual way
+  - navigation [ref=e10]:
+    - generic [ref=e11]:
+      - button "Briefing" [ref=e12]
+      - button "Bank coding" [ref=e13]
+      - button "Inbox" [ref=e14]
+      - button "Monthly report" [ref=e15]
+      - button "Invoice entry" [ref=e16]
+      - button "Stock reconciliation" [ref=e17]
+      - button "AI example" [ref=e18]
+  - main [ref=e19]:
+    - generic [ref=e163]:
+      - generic [ref=e164]:
+        - generic [ref=e165]:
+          - heading "Overview" [level=2] [ref=e166]
+          - button "Hide" [ref=e167]
+        - paragraph [ref=e168]: What needs attention right now, split from what's just waiting.
+      - generic [ref=e169]:
+        - generic [ref=e170]:
+          - generic [ref=e171]:
+            - generic [ref=e172]: Urgent (1)
+            - button "Expand" [ref=e173]
+          - button "Waitomo Fuel Accounts urgent task URGENT - updated bank account details 4 Jun, 09:17 pm" [ref=e175]:
+            - generic [ref=e176]:
+              - generic [ref=e177]: Waitomo Fuel Accounts
+              - generic [ref=e178]: urgent task
+            - paragraph [ref=e179]: URGENT - updated bank account details
+            - paragraph [ref=e180]: 4 Jun, 09:17 pm
+        - generic [ref=e181]:
+          - generic [ref=e182]:
+            - generic [ref=e183]: Tasks (11)
+            - button "Collapse" [active] [ref=e293]
+          - generic [ref=e185]:
+            - button "Kate Molloy ewe losses 11 Jun, 02:40 am" [ref=e186]:
+              - text: Kate Molloy
+              - paragraph [ref=e187]: ewe losses
+              - paragraph [ref=e188]: 11 Jun, 02:40 am
+            - button "Gary Preston payout question 5 Jun, 08:12 pm" [ref=e189]:
+              - text: Gary Preston
+              - paragraph [ref=e190]: payout question
+              - paragraph [ref=e191]: 5 Jun, 08:12 pm
+            - button "Bruce Tanner wheat numbers 5 Jun, 01:20 am" [ref=e192]:
+              - text: Bruce Tanner
+              - paragraph [ref=e193]: wheat numbers
+              - paragraph [ref=e194]: 5 Jun, 01:20 am
+            - button "Gary Preston (no subject) 4 Jun, 11:52 am" [ref=e195]:
+              - text: Gary Preston
+              - paragraph [ref=e196]: (no subject)
+              - paragraph [ref=e197]: 4 Jun, 11:52 am
+            - button "Gary Preston bank wants a cashflow forecast 2 Jun, 07:41 pm" [ref=e198]:
+              - text: Gary Preston
+              - paragraph [ref=e199]: bank wants a cashflow forecast
+              - paragraph [ref=e200]: 2 Jun, 07:41 pm
+            - button "Kate Molloy ute 2 Jun, 07:23 am" [ref=e201]:
+              - text: Kate Molloy
+              - paragraph [ref=e202]: ute
+              - paragraph [ref=e203]: 2 Jun, 07:23 am
+            - button "Bruce Tanner agriseed invoice 2 Jun, 05:34 am" [ref=e204]:
+              - text: Bruce Tanner
+              - paragraph [ref=e205]: agriseed invoice
+              - paragraph [ref=e206]: 2 Jun, 05:34 am
+            - button "Kate Molloy lamb numbers dont look right 1 Jun, 08:56 pm" [ref=e207]:
+              - text: Kate Molloy
+              - paragraph [ref=e208]: lamb numbers dont look right
+              - paragraph [ref=e209]: 1 Jun, 08:56 pm
+            - button "Bruce Tanner bank meeting 29 May, 06:58 pm" [ref=e210]:
+              - text: Bruce Tanner
+              - paragraph [ref=e211]: bank meeting
+              - paragraph [ref=e212]: 29 May, 06:58 pm
+            - button "Bruce Tanner why is my tax bill so big?? 28 May, 09:48 am" [ref=e213]:
+              - text: Bruce Tanner
+              - paragraph [ref=e214]: why is my tax bill so big??
+              - paragraph [ref=e215]: 28 May, 09:48 am
+            - button "Gary Preston feb feed 27 May, 12:15 am" [ref=e216]:
+              - text: Gary Preston
+              - paragraph [ref=e217]: feb feed
+              - paragraph [ref=e218]: 27 May, 12:15 am
+      - generic [ref=e219]:
+        - heading "Inbox" [level=2] [ref=e220]
+        - paragraph [ref=e221]: Client emails waiting on a reply. Nothing actually sends — replies just get saved. One is already answered as an example.
+      - generic [ref=e222]:
+        - generic [ref=e223]:
+          - button "Waitomo Fuel Accounts urgent task URGENT - updated bank account details 4 Jun, 09:17 pm" [ref=e224]:
+            - generic [ref=e225]:
+              - generic [ref=e226]: Waitomo Fuel Accounts
+              - generic [ref=e227]: urgent task
+            - paragraph [ref=e228]: URGENT - updated bank account details
+            - paragraph [ref=e229]: 4 Jun, 09:17 pm
+          - button "Kate Molloy ewe losses 11 Jun, 02:40 am" [ref=e230]:
+            - generic [ref=e232]: Kate Molloy
+            - paragraph [ref=e233]: ewe losses
+            - paragraph [ref=e234]: 11 Jun, 02:40 am
+          - button "Gary Preston payout question 5 Jun, 08:12 pm" [ref=e235]:
+            - generic [ref=e237]: Gary Preston
+            - paragraph [ref=e238]: payout question
+            - paragraph [ref=e239]: 5 Jun, 08:12 pm
+          - button "Bruce Tanner wheat numbers 5 Jun, 01:20 am" [ref=e240]:
+            - generic [ref=e242]: Bruce Tanner
+            - paragraph [ref=e243]: wheat numbers
+            - paragraph [ref=e244]: 5 Jun, 01:20 am
+          - button "Gary Preston (no subject) 4 Jun, 11:52 am" [ref=e245]:
+            - generic [ref=e247]: Gary Preston
+            - paragraph [ref=e248]: (no subject)
+            - paragraph [ref=e249]: 4 Jun, 11:52 am
+          - button "Gary Preston bank wants a cashflow forecast 2 Jun, 07:41 pm" [ref=e250]:
+            - generic [ref=e252]: Gary Preston
+            - paragraph [ref=e253]: bank wants a cashflow forecast
+            - paragraph [ref=e254]: 2 Jun, 07:41 pm
+          - button "Kate Molloy ute 2 Jun, 07:23 am" [ref=e255]:
+            - generic [ref=e257]: Kate Molloy
+            - paragraph [ref=e258]: ute
+            - paragraph [ref=e259]: 2 Jun, 07:23 am
+          - button "Bruce Tanner agriseed invoice 2 Jun, 05:34 am" [ref=e260]:
+            - generic [ref=e262]: Bruce Tanner
+            - paragraph [ref=e263]: agriseed invoice
+            - paragraph [ref=e264]: 2 Jun, 05:34 am
+          - button "Kate Molloy lamb numbers dont look right 1 Jun, 08:56 pm" [ref=e265]:
+            - generic [ref=e267]: Kate Molloy
+            - paragraph [ref=e268]: lamb numbers dont look right
+            - paragraph [ref=e269]: 1 Jun, 08:56 pm
+          - button "Bruce Tanner bank meeting 29 May, 06:58 pm" [ref=e270]:
+            - generic [ref=e272]: Bruce Tanner
+            - paragraph [ref=e273]: bank meeting
+            - paragraph [ref=e274]: 29 May, 06:58 pm
+          - button "Bruce Tanner why is my tax bill so big?? 28 May, 09:48 am" [ref=e275]:
+            - generic [ref=e277]: Bruce Tanner
+            - paragraph [ref=e278]: why is my tax bill so big??
+            - paragraph [ref=e279]: 28 May, 09:48 am
+          - button "Gary Preston feb feed 27 May, 12:15 am" [ref=e280]:
+            - generic [ref=e282]: Gary Preston
+            - paragraph [ref=e283]: feb feed
+            - paragraph [ref=e284]: 27 May, 12:15 am
+          - button "Kate Molloy replied gst 25 May, 04:05 am" [ref=e285]:
+            - generic [ref=e286]:
+              - generic [ref=e287]: Kate Molloy
+              - generic [ref=e288]: replied
+            - paragraph [ref=e289]: gst
+            - paragraph [ref=e290]: 25 May, 04:05 am
+        - paragraph [ref=e292]: Select an email to read it.

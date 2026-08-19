@@ -84,6 +84,13 @@ const sortedEmails = computed(() =>
     [...emails.value].sort((a, b) => sortRank(a) - sortRank(b)),
 );
 
+const overviewVisible = ref(true);
+const urgentExpanded = ref(false);
+const tasksExpanded = ref(false);
+
+const urgentEmails = computed(() => sortedEmails.value.filter((email) => isUrgent(email)));
+const taskEmails = computed(() => sortedEmails.value.filter((email) => !isUrgent(email) && !email.replied_at));
+
 function formatDateTime(iso) {
     return new Date(iso).toLocaleString('en-NZ', {
         day: 'numeric',
@@ -96,6 +103,71 @@ function formatDateTime(iso) {
 
 <template>
     <div>
+        <div class="mb-4">
+            <div class="mb-1 flex items-center justify-between">
+                <h2 class="text-lg font-semibold">Overview</h2>
+                <button class="text-xs font-medium text-fg-main-blue hover:underline" @click="overviewVisible = !overviewVisible">
+                    {{ overviewVisible ? 'Hide' : 'Show' }}
+                </button>
+            </div>
+            <p class="text-sm text-fg-mid-grey">What needs attention right now, split from what's just waiting.</p>
+        </div>
+
+        <div v-if="overviewVisible && !loading" class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+            <!-- Urgent -->
+            <div class="overflow-hidden rounded border border-fg-muted-grey bg-white">
+                <div class="flex items-center justify-between border-b border-fg-pale-grey px-3 py-2">
+                    <span class="text-sm font-medium">Urgent ({{ urgentEmails.length }})</span>
+                    <button class="text-xs font-medium text-fg-main-blue hover:underline" @click="urgentExpanded = !urgentExpanded">
+                        {{ urgentExpanded ? 'Collapse' : 'Expand' }}
+                    </button>
+                </div>
+                <div class="overflow-y-auto" :class="urgentExpanded ? 'max-h-[32rem]' : 'max-h-48'">
+                    <button
+                        v-for="email in urgentEmails"
+                        :key="email.id"
+                        class="block w-full border-b border-fg-pale-grey px-3 py-2 text-left hover:bg-fg-pale-grey"
+                        :class="selected?.id === email.id ? 'bg-fg-main-blue-9' : ''"
+                        @click="open(email)"
+                    >
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium">{{ email.from_name }}</span>
+                            <span class="rounded-full px-2 py-0.5 text-xs" :class="badge(email).class">
+                                {{ badge(email).label }}
+                            </span>
+                        </div>
+                        <p class="truncate text-sm text-fg-dark-grey">{{ email.subject }}</p>
+                        <p class="text-xs text-fg-light-grey">{{ formatDateTime(email.received_at) }}</p>
+                    </button>
+                    <p v-if="!urgentEmails.length" class="p-3 text-sm text-fg-light-grey">Nothing urgent.</p>
+                </div>
+            </div>
+
+            <!-- Tasks -->
+            <div class="overflow-hidden rounded border border-fg-muted-grey bg-white">
+                <div class="flex items-center justify-between border-b border-fg-pale-grey px-3 py-2">
+                    <span class="text-sm font-medium">Tasks ({{ taskEmails.length }})</span>
+                    <button class="text-xs font-medium text-fg-main-blue hover:underline" @click="tasksExpanded = !tasksExpanded">
+                        {{ tasksExpanded ? 'Collapse' : 'Expand' }}
+                    </button>
+                </div>
+                <div class="overflow-y-auto" :class="tasksExpanded ? 'max-h-[32rem]' : 'max-h-48'">
+                    <button
+                        v-for="email in taskEmails"
+                        :key="email.id"
+                        class="block w-full border-b border-fg-pale-grey px-3 py-2 text-left hover:bg-fg-pale-grey"
+                        :class="selected?.id === email.id ? 'bg-fg-main-blue-9' : ''"
+                        @click="open(email)"
+                    >
+                        <span class="text-sm font-medium">{{ email.from_name }}</span>
+                        <p class="truncate text-sm text-fg-dark-grey">{{ email.subject }}</p>
+                        <p class="text-xs text-fg-light-grey">{{ formatDateTime(email.received_at) }}</p>
+                    </button>
+                    <p v-if="!taskEmails.length" class="p-3 text-sm text-fg-light-grey">Nothing waiting.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="mb-4">
             <h2 class="text-lg font-semibold">Inbox</h2>
             <p class="text-sm text-fg-mid-grey">
