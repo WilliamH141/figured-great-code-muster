@@ -13,6 +13,12 @@ const savedAt = ref(null);
 // The entry form being filled in for the selected invoice.
 const form = ref(emptyForm());
 
+// AI-assisted extraction: reads the scanned text into the form above, and
+// separately checks whether a client has emailed disputing this supplier.
+const extracting = ref(false);
+const extractError = ref('');
+const dispute = ref(null);
+
 function emptyForm() {
     return {
         supplier: '',
@@ -33,6 +39,8 @@ onMounted(async () => {
 function open(invoice) {
     selected.value = invoice;
     savedAt.value = null;
+    extractError.value = '';
+    dispute.value = null;
     if (invoice.entered_at) {
         // Pre-fill from the saved entry so it can be reviewed or corrected.
         form.value = {
@@ -44,6 +52,30 @@ function open(invoice) {
         };
     } else {
         form.value = emptyForm();
+    }
+}
+
+async function extractWithAi() {
+    extracting.value = true;
+    extractError.value = '';
+    try {
+        const { data } = await axios.post(`/api/invoices/${selected.value.id}/extract`);
+        if (Object.keys(data.fields ?? {}).length) {
+            form.value = {
+                supplier: data.fields.supplier ?? '',
+                invoice_date: data.fields.invoice_date ?? '',
+                total: data.fields.total ?? null,
+                category_id: data.fields.category_id ?? null,
+                lines: data.fields.lines?.length ? data.fields.lines : [{ description: '', amount: null }],
+            };
+        } else {
+            extractError.value = "Couldn't read this scan — key it in by hand.";
+        }
+        dispute.value = data.dispute ?? null;
+    } catch (e) {
+        extractError.value = e.response?.data?.error ?? 'Something went wrong reading the scan.';
+    } finally {
+        extracting.value = false;
     }
 }
 
@@ -105,11 +137,29 @@ async function save() {
                 <p v-if="!selected" class="rounded border border-dashed border-fg-muted-grey p-8 text-center text-fg-light-grey">
                     Select an invoice.
                 </p>
-                <pre
-                    v-else
-                    class="overflow-x-auto rounded border border-fg-muted-grey bg-white p-4 font-mono text-xs leading-relaxed"
-                    >{{ selected.raw_text }}</pre
-                >
+                <template v-else>
+                    <div class="mb-2 flex items-center justify-between">
+                        <p class="text-xs font-medium text-fg-mid-grey">Scanned text</p>
+                        <button
+                            class="rounded border border-fg-main-blue px-3 py-1 text-xs font-medium text-fg-main-blue hover:bg-fg-main-blue-9 disabled:opacity-50"
+                            :disabled="extracting"
+                            @click="extractWithAi"
+                        >
+                            {{ extracting ? 'Reading the scan…' : 'Fill from scan (AI)' }}
+                        </button>
+                    </div>
+                    <pre
+                        class="overflow-x-auto rounded border border-fg-muted-grey bg-white p-4 font-mono text-xs leading-relaxed"
+                        >{{ selected.raw_text }}</pre
+                    >
+                    <p v-if="extractError" class="mt-2 text-sm text-fg-danger-dark">{{ extractError }}</p>
+                    <div v-if="dispute" class="mt-2 rounded bg-fg-warning-15 p-3 text-sm text-fg-warning-text">
+                        <p class="font-medium">A client has emailed about this supplier — check before saving</p>
+                        <p class="mt-1">
+                            <span class="font-medium">{{ dispute.from_name }}</span> — "{{ dispute.subject }}": {{ dispute.snippet }}
+                        </p>
+                    </div>
+                </template>
             </div>
 
             <!-- Entry form -->

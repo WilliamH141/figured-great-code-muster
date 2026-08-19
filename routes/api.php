@@ -4,6 +4,7 @@ use App\Http\Controllers\AiController;
 use App\Http\Controllers\BankTransactionController;
 use App\Http\Controllers\EmailAgentController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\InvoiceAgentController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StockController;
@@ -17,6 +18,7 @@ Route::patch('/bank-transactions/{bankTransaction}', [BankTransactionController:
 Route::get('/emails', [EmailController::class, 'index']);
 Route::post('/emails/{email}/reply', [EmailController::class, 'reply']);
 Route::post('/emails/{email}/draft', [EmailAgentController::class, 'draft']);
+Route::post('/emails/{email}/act', [EmailAgentController::class, 'act']);
 
 // Page 3: Monthly Report
 Route::get('/farms', [ReportController::class, 'farms']);
@@ -26,6 +28,7 @@ Route::put('/farms/{farm}/commentary', [ReportController::class, 'saveCommentary
 // Page 4: Invoice Entry
 Route::get('/invoices', [InvoiceController::class, 'index']);
 Route::put('/invoices/{invoice}', [InvoiceController::class, 'update']);
+Route::post('/invoices/{invoice}/extract', [InvoiceAgentController::class, 'extract']);
 
 // Page 5: Stock Reconciliation
 Route::get('/stock', [StockController::class, 'index']);
