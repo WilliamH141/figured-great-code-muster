@@ -61,10 +61,23 @@ function isUrgent(email) {
     return `${email.subject ?? ''} ${email.body ?? ''}`.toLowerCase().includes('urgent');
 }
 
+function badge(email) {
+    if (isUrgent(email)) {
+        return email.replied_at
+            ? { label: 'urgent reply', class: 'bg-orange-100 text-orange-700' }
+            : { label: 'urgent task', class: 'bg-fg-danger-15 text-fg-danger-dark' };
+    }
+    if (email.replied_at) {
+        return { label: 'replied', class: 'bg-fg-positive-15 text-fg-positive-dark' };
+    }
+    return null;
+}
+
+const badgeRank = { 'urgent task': 0, 'urgent reply': 1, replied: 2 };
+
 function sortRank(email) {
-    if (email.replied_at) return 2;
-    if (isUrgent(email)) return 0;
-    return 1;
+    const label = badge(email)?.label;
+    return label ? badgeRank[label] : 0.5;
 }
 
 const sortedEmails = computed(() =>
@@ -105,19 +118,12 @@ function formatDateTime(iso) {
                 >
                     <div class="flex items-center justify-between">
                         <span class="text-sm font-medium">{{ email.from_name }}</span>
-                        <span class="flex gap-1">
-                            <span
-                                v-if="isUrgent(email)"
-                                class="rounded-full bg-fg-danger-15 px-2 py-0.5 text-xs text-fg-danger-dark"
-                            >
-                                urgent
-                            </span>
-                            <span
-                                v-if="email.replied_at"
-                                class="rounded-full bg-fg-positive-15 px-2 py-0.5 text-xs text-fg-positive-dark"
-                            >
-                                replied
-                            </span>
+                        <span
+                            v-if="badge(email)"
+                            class="rounded-full px-2 py-0.5 text-xs"
+                            :class="badge(email).class"
+                        >
+                            {{ badge(email).label }}
                         </span>
                     </div>
                     <p class="truncate text-sm text-fg-dark-grey">{{ email.subject }}</p>
