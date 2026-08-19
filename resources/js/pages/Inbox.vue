@@ -8,6 +8,13 @@ const draft = ref('');
 const sending = ref(false);
 const loading = ref(true);
 
+// AI-assisted drafting. drafting() is the request in flight; agentResult()
+// holds what came back - either a drafted reply (which also fills the
+// textarea above) or a flag explaining why a human needs to handle it.
+const drafting = ref(false);
+const agentResult = ref(null);
+const agentError = ref('');
+
 onMounted(async () => {
     const { data } = await axios.get('/api/emails');
     emails.value = data;
@@ -17,6 +24,25 @@ onMounted(async () => {
 function open(email) {
     selected.value = email;
     draft.value = '';
+    agentResult.value = null;
+    agentError.value = '';
+}
+
+async function draftWithAi() {
+    drafting.value = true;
+    agentResult.value = null;
+    agentError.value = '';
+    try {
+        const { data } = await axios.post(`/api/emails/${selected.value.id}/draft`);
+        agentResult.value = data;
+        if (data.action === 'draft') {
+            draft.value = data.reply;
+        }
+    } catch (e) {
+        agentError.value = e.response?.data?.error ?? 'Something went wrong asking the assistant.';
+    } finally {
+        drafting.value = false;
+    }
 }
 
 async function sendReply() {
@@ -98,6 +124,42 @@ function formatDateTime(iso) {
                             Your reply — sent {{ formatDateTime(selected.replied_at) }}
                         </p>
                         <p class="mt-2 whitespace-pre-wrap text-sm leading-relaxed">{{ selected.reply_body }}</p>
+                    </div>
+
+                    <!-- AI-assisted draft: pulls real numbers for simple lookups, or
+                         flags anything that needs a human (advice, disputes, wellbeing,
+                         unrecognised senders). Never sends - only ever fills the box below. -->
+                    <div class="rounded border border-dashed border-fg-muted-grey bg-white p-4">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm font-medium">Assistant</p>
+                            <button
+                                class="rounded border border-fg-main-blue px-3 py-1 text-xs font-medium text-fg-main-blue hover:bg-fg-main-blue-9 disabled:opacity-50"
+                                :disabled="drafting"
+                                @click="draftWithAi"
+                            >
+                                {{ drafting ? 'Reading the email…' : 'Draft with AI' }}
+                            </button>
+                        </div>
+
+                        <p v-if="agentError" class="mt-2 text-sm text-fg-danger-dark">{{ agentError }}</p>
+
+                        <div v-else-if="agentResult?.action === 'flag'" class="mt-2 rounded bg-fg-warning-15 p-3 text-sm text-fg-warning-text">
+                            <p class="font-medium">Needs a human — not drafted</p>
+                            <p class="mt-1">{{ agentResult.reason }}</p>
+                        </div>
+
+                        <div v-else-if="agentResult?.action === 'draft'" class="mt-2 rounded bg-fg-positive-15 p-3 text-sm text-fg-positive-dark">
+                            <p class="font-medium">Drafted below from: {{ agentResult.category?.replaceAll('_', ' ') }}</p>
+                            <ul v-if="agentResult.data_points?.length" class="mt-1 list-inside list-disc">
+                                <li v-for="(point, i) in agentResult.data_points" :key="i">{{ point }}</li>
+                            </ul>
+                            <p class="mt-1 text-xs">Review before sending — nothing goes out until you hit Send.</p>
+                        </div>
+
+                        <p v-else class="mt-2 text-sm text-fg-light-grey">
+                            Pulls real numbers for straightforward lookups. Anything needing judgement,
+                            involving a dispute, or that reads as personal gets flagged for you instead.
+                        </p>
                     </div>
 
                     <div class="rounded border border-fg-muted-grey bg-white p-4">
