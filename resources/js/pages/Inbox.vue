@@ -126,9 +126,9 @@ function formatDateTime(iso) {
         <div v-if="overviewVisible && !loading" class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             <!-- Urgent -->
             <div class="overflow-hidden rounded border border-fg-muted-grey bg-white">
-                <div class="flex items-center justify-between border-b border-fg-pale-grey px-3 py-2">
+                <div class="flex items-center justify-between bg-[#112c57] px-3 py-2 text-white">
                     <span class="text-sm font-medium">Urgent ({{ urgentEmails.length }})</span>
-                    <button class="text-xs font-medium text-fg-main-blue hover:underline" @click="urgentExpanded = !urgentExpanded">
+                    <button class="text-xs font-medium text-white hover:underline" @click="urgentExpanded = !urgentExpanded">
                         {{ urgentExpanded ? 'Collapse' : 'Expand' }}
                     </button>
                 </div>
@@ -155,9 +155,9 @@ function formatDateTime(iso) {
 
             <!-- Tasks -->
             <div class="overflow-hidden rounded border border-fg-muted-grey bg-white">
-                <div class="flex items-center justify-between border-b border-fg-pale-grey px-3 py-2">
+                <div class="flex items-center justify-between bg-[#112c57] px-3 py-2 text-white">
                     <span class="text-sm font-medium">Tasks ({{ taskEmails.length }})</span>
-                    <button class="text-xs font-medium text-fg-main-blue hover:underline" @click="tasksExpanded = !tasksExpanded">
+                    <button class="text-xs font-medium text-white hover:underline" @click="tasksExpanded = !tasksExpanded">
                         {{ tasksExpanded ? 'Collapse' : 'Expand' }}
                     </button>
                 </div>
